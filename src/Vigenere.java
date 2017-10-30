@@ -1,3 +1,4 @@
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,15 +6,17 @@ public class Vigenere {
 	
 	int tries=0;
 	String key;
+	UserInterface window;
 	String plaintext;
 	String ciphertext;
 	String enc;
 	String finaltext;
 	List<Integer> keylist = new ArrayList<Integer>();
 	 
-	public Vigenere(String ciphertext, String plaintext) {
+	public Vigenere(String ciphertext, String plaintext,UserInterface window) {
 		this.ciphertext = ciphertext;
 		this.plaintext = plaintext;
+		this.window = window;
 	}
 	
 	static String encrypt(String key,String text) {
@@ -44,7 +47,7 @@ public class Vigenere {
     }
 	
 	
-	public String Decode() {
+	public void Decode() {
 		
 	Keyfinder kf = new Keyfinder();
 	key=kf.chartokey();
@@ -55,17 +58,10 @@ public class Vigenere {
 			 key = kf.chartokey();
 			 System.out.println(key);
 			 finaltext =decrypt(key,ciphertext);
-		 	if(key=="TURING") {
-		 		System.out.println("found");
-		 	}
+			 tries++;
+			 window.updateTextField();
 		 }
-		 
-		tries++;
-	 }while(!finaltext.equals(plaintext));
-	 System.out.println("tries :" + tries);
-		
-		return null;
-		
+	 }while(!finaltext.equals(plaintext));	
 	}
 	
 	
