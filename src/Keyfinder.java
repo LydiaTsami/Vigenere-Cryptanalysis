@@ -7,7 +7,7 @@ public class Keyfinder {
 	int subkey1,subkey2,subkey3,subkey4,subkey5,subkey6;
 	
 	public Keyfinder() {
-		this.subkey1=20;
+		this.subkey1=1;
 		this.subkey2=1;
 		this.subkey3=1;
 		this.subkey4=1;
