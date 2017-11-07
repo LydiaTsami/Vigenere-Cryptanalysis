@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.WindowConstants;
 import javax.swing.JTextField;
 
 public class UserInterface {
@@ -19,7 +20,6 @@ public class UserInterface {
 	private long totalTime;
 	private String ciphertext="VIEOEGMOCIGOHHJGBALOTMRJBHUMPXRJKQAMMBZAZKLMROROMQRAAUMNFWUGKXRNGKKUCTXKXJLXGNXAFWQCHLBIAJLJVVQSHLVBVSXQZBUIKSGBBUEUELFZNXPKNXXZLTYEMBVIIGBFRJYKUIFSFGGXUWAUMZFZTKMNYIGNXVZOTKLNSWBQBMZVGNXCEBRXGYK";
 	private String plaintext="CONGRATULATIONSYOUSUCEEDINDECRYPTINGTHISMESSAGEITWASNOTTOOHARDAFTERALLKEEPUPTHEGOODWORKANDSPENDMORETIMEWITHCRYPTOOLANDSTUDYCAREFULLYTHEAVAILABLEBOOKSANDDONOTFORGETTHATHEBIGGESTBOOKISINTHEINTERNET";
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -57,7 +57,8 @@ public class UserInterface {
 		frmVigenere = new JFrame();
 		frmVigenere.setTitle("Vigenere - Attack in Progress");
 		frmVigenere.setBounds(100, 100, 450, 300);
-		frmVigenere.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVigenere.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		//frmVigenere.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVigenere.getContentPane().setLayout(null);
 		
 		
@@ -65,30 +66,25 @@ public class UserInterface {
 		textPane.setBounds(69, 88, 294, 103);
 		frmVigenere.getContentPane().add(textPane);
 		
+		JLabel lblPleaseWait = new JLabel("Please wait , attack in progress");
+		lblPleaseWait.setVisible(false);
+		lblPleaseWait.setBounds(131, 37, 188, 14);
+		frmVigenere.getContentPane().add(lblPleaseWait);
+		
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblPleaseWait.setVisible(true);
 				long startTime = System.currentTimeMillis();
-				bf = new Vigenere(ciphertext, plaintext,window);
+				bf = new Vigenere(ciphertext, plaintext);
 				bf.Decode();
 				long endTime   = System.currentTimeMillis();
 				long totalTime = endTime - startTime;
-				
 				textPane.setText("Number of tries: " +bf.tries + "\n Key: " + bf.key+ "\n Time elapsed: " + TimeUnit.MILLISECONDS.toMinutes(totalTime) + "minutes");
 			}
 		});
 		btnStart.setBounds(171, 203, 89, 23);
 		frmVigenere.getContentPane().add(btnStart);
 		
-		textField = new JTextField();
-		textField.setBounds(69, 35, 294, 30);
-		frmVigenere.getContentPane().add(textField);
-		textField.setColumns(10);
-	
-		
-	}
-	
-	public void updateTextField() {
-		textField.setText("Progress: "+bf.tries+ "/308915776 \n"+ (308915776-bf.tries)+ " Remaining.");
 	}
 }

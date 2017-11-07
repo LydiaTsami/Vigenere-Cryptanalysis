@@ -16,6 +16,7 @@ public class Keyfinder {
 		
 	}
 	
+	//Ksekinaei apo to AAAAAA mexri na ftasei sto swsto kleidi , alliws termatizei sto ZZZZZZ kai epistrefei me timi 1 kai to currkey me timi null
 	public int Findkeys() {
 		
 		subkey6++;		
@@ -46,10 +47,12 @@ public class Keyfinder {
 		return 0;
 	}
 
+	//Metatrepei enan int arithmo se char
 	public String IntToChar(int i) {
 		return i > 0 && i < 27 ? String.valueOf((char)(i + 'A' - 1)) : null;
 	}
 	
+	//Prosthetei sto currkey kai ta 6 grammata afou ta metatrepsei apo int se char
 	public String chartokey() {
 			currkey = IntToChar(subkey1);
 			currkey += IntToChar(subkey2);
