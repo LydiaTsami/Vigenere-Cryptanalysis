@@ -8,12 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.JTextField;
 
 public class UserInterface {
 
 	private JFrame frmVigenere;
+	private JTextPane textPane;
 	private static UserInterface window;
 	private Vigenere bf;
 	private String key;
@@ -62,7 +64,7 @@ public class UserInterface {
 		frmVigenere.getContentPane().setLayout(null);
 		
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setBounds(69, 88, 294, 103);
 		frmVigenere.getContentPane().add(textPane);
 		
@@ -75,16 +77,24 @@ public class UserInterface {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				lblPleaseWait.setVisible(true);
-				long startTime = System.currentTimeMillis();
-				bf = new Vigenere(ciphertext, plaintext);
-				bf.Decode();
-				long endTime   = System.currentTimeMillis();
-				long totalTime = endTime - startTime;
-				textPane.setText("Number of tries: " +bf.tries + "\n Key: " + bf.key+ "\n Time elapsed: " + TimeUnit.MILLISECONDS.toMinutes(totalTime) + "minutes");
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						bf = new Vigenere(ciphertext, plaintext);
+						long startTime = System.currentTimeMillis();
+						bf.Decode(); 
+						long endTime = System.currentTimeMillis();
+						long totalTime = endTime - startTime;
+						updateText(totalTime);
+					}
+				});
 			}
 		});
 		btnStart.setBounds(171, 203, 89, 23);
 		frmVigenere.getContentPane().add(btnStart);
 		
+	}
+	private void updateText(long totalTime) {
+		textPane.setText("Number of tries: " +bf.tries + "\n Key: " + bf.key+ "\n Time elapsed: " + TimeUnit.MILLISECONDS.toMinutes(totalTime) + "minutes");
 	}
 }
